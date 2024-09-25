@@ -12,8 +12,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
+  { name: "Dashboard", href: "/dashboard", current: true },
+  { name: "Team", href: "/", current: false },
   { name: "Projects", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
 ];
@@ -26,7 +26,7 @@ export default function Example() {
   return (
     <Disclosure
       as="nav"
-      className="bg-transparent border-b border-gray-200 p-2 fixed top-0 left-0 right-0"
+      className="bg-transparent border-b border-gray-200 p-2 fixed top-0 left-0 right-0 bg-transparencies-100"
     >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
@@ -73,7 +73,7 @@ export default function Example() {
             {/* Profile dropdown */}
             <Menu as="div" className="relative ml-3">
               <div>
-                <MenuButton className="relative flex rounded-full bg-second text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                <MenuButton className="relative flex rounded-full bg-second text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary hover:border-primary">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
 
@@ -99,7 +99,7 @@ export default function Example() {
               >
                 <MenuItem>
                   <a
-                    href="#"
+                    href="/dashboard"
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                   >
                     Your Profile
