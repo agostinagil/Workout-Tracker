@@ -7,6 +7,9 @@ module.exports = {
       backgroundImage: {
         "hero-pattern": "url('./assets/fondo.jpg')",
       },
+      boxShadow: {
+        custom: "0 5px 20px 0 rgba(0, 0, 0, 0.04)",
+      },
     },
     colors: {
       primary: "#cf6b6b",
@@ -15,6 +18,7 @@ module.exports = {
       btnBorder: "#c0c489",
       transparencies: {
         100: "#e1e1e13b",
+        200: "#00000070",
       },
       black: colors.black,
       white: colors.white,
