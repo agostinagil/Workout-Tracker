@@ -1,7 +1,12 @@
+import { WorkoutsProvider } from "./contexts/WorkoutsContext";
 import AppRoutes from "./routes/Routes";
 
 function App() {
-  return <AppRoutes />;
+  return (
+    <WorkoutsProvider>
+      <AppRoutes />;
+    </WorkoutsProvider>
+  );
 }
 
 export default App;

@@ -1,16 +1,31 @@
+import ShortUniqueId from "short-unique-id";
 import "./createPlan.css";
+import { Workout } from "../../../types/Workout";
+import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 
 const CreatePlanForm = () => {
-  const handleSubmit = (e) => {
+  const { createWorkout } = useWorkoutsContext();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const uid = new ShortUniqueId({ length: 10 });
+    const formData = new FormData(e.currentTarget);
+    const workout = formData.get("workout") as string;
+
+    const newWorkout: Workout = {
+      id: uid.rnd(),
+      name: workout,
+    };
+
+    createWorkout(newWorkout);
   };
 
   return (
     <>
-      <div className="bg-second w-full p-20 border-none">
+      <div className="bg-second w-full p-20 border-none ">
         <form onSubmit={handleSubmit}>
-          <div className=" grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-5">
+          <div className=" grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 ">
+            <div className="sm:col-span-5 ">
               <label
                 htmlFor="workout"
                 className="block text-lg font-semibold leading-6 text-gray-900"
@@ -27,7 +42,7 @@ const CreatePlanForm = () => {
                 />
               </div>
             </div>
-            <div className="sm:col-span-3">
+            {/* <div className="sm:col-span-3">
               <label htmlFor="exercise" className="label-form">
                 Exercise
               </label>
@@ -82,7 +97,7 @@ const CreatePlanForm = () => {
                   className="input-form"
                 />
               </div>
-            </div>
+            </div> */}
             {/* <div className="sm:col-span-3">
               <label
                 htmlFor="first-name"
