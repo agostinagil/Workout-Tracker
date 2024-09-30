@@ -6,6 +6,8 @@ module.exports = {
     extend: {
       backgroundImage: {
         "hero-pattern": "url('./assets/fondo.jpg')",
+        gradient:
+          "radial-gradient(circle, rgba(255,148,176,1) 9%, rgba(255,214,128,1) 39%, rgba(204,210,255,1) 94%)",
       },
       boxShadow: {
         custom: "0 5px 20px 0 rgba(0, 0, 0, 0.04)",
