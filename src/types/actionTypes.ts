@@ -1,5 +1,9 @@
-import { CREATE_WORKOUT, REMOVE_WORKOUT } from "../actions/workouts";
-import { Workout } from "./Workout";
+import {
+  ADD_EXERCISE,
+  CREATE_WORKOUT,
+  REMOVE_WORKOUT,
+} from "../actions/workouts";
+import { Exercise, Workout } from "./workout";
 
 export interface CreateWorkoutAction {
   type: typeof CREATE_WORKOUT;
@@ -11,4 +15,12 @@ export interface RemoveWorkoutAction {
   payload: { id: string };
 }
 
-export type WorkoutAction = CreateWorkoutAction | RemoveWorkoutAction;
+export interface AddExerciseAction {
+  type: typeof ADD_EXERCISE;
+  payload: { workoutId: string; exercise: Exercise };
+}
+
+export type WorkoutAction =
+  | CreateWorkoutAction
+  | RemoveWorkoutAction
+  | AddExerciseAction;

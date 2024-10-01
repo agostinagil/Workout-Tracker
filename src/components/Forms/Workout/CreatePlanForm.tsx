@@ -1,6 +1,6 @@
 import ShortUniqueId from "short-unique-id";
 import "./createPlan.css";
-import { Workout } from "../../../types/Workout";
+import { Workout } from "../../../types/workout";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 
 const CreatePlanForm = () => {
@@ -15,6 +15,7 @@ const CreatePlanForm = () => {
     const newWorkout: Workout = {
       id: uid.rnd(),
       name: workout,
+      exercises: [],
     };
 
     createWorkout(newWorkout);

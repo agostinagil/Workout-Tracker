@@ -7,8 +7,12 @@ import {
 } from "react";
 
 import { initialState, workoutsReducer } from "../reducers/workoutsReducer";
-import { CREATE_WORKOUT, REMOVE_WORKOUT } from "../actions/workouts";
-import { Workout, WorkoutState } from "../types/Workout";
+import {
+  ADD_EXERCISE,
+  CREATE_WORKOUT,
+  REMOVE_WORKOUT,
+} from "../actions/workouts";
+import { Exercise, Workout, WorkoutState } from "../types/workout";
 import { WorkoutAction } from "../types/actionTypes";
 
 interface WorkoutsContextType {
@@ -16,6 +20,7 @@ interface WorkoutsContextType {
   dispatch: Dispatch<WorkoutAction>;
   createWorkout: (workout: Workout) => void;
   removeWorkout: (id: string) => void;
+  addExercise: (workoutId: string, exercise: Exercise) => void;
 }
 
 interface WorkoutsProviderProps {
@@ -39,8 +44,14 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
     dispatch({ type: REMOVE_WORKOUT, payload: { id } });
   };
 
+  const addExercise = (workoutId: string, exercise: Exercise) => {
+    dispatch({ type: ADD_EXERCISE, payload: { workoutId, exercise } });
+  };
+
   return (
-    <Provider value={{ state, dispatch, createWorkout, removeWorkout }}>
+    <Provider
+      value={{ state, dispatch, createWorkout, removeWorkout, addExercise }}
+    >
       {children}
     </Provider>
   );
