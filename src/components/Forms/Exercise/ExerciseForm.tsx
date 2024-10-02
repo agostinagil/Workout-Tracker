@@ -4,9 +4,10 @@ import ShortUniqueId from "short-unique-id";
 
 export interface FormProps {
   id: string;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const ExerciseForm = ({ id }: FormProps) => {
+const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
   const { state, addExercise } = useWorkoutsContext();
   const workout = state.nextWorkouts.find((w) => w.id === id);
 
@@ -31,6 +32,7 @@ const ExerciseForm = ({ id }: FormProps) => {
       };
       addExercise(workout.id, newExercise);
       setExercise({ id: "", name: "", sets: 0, repetitions: 0, rpe: 0 });
+      setIsOpen(false);
     }
   };
   return (
@@ -53,6 +55,7 @@ const ExerciseForm = ({ id }: FormProps) => {
                   }
                   autoComplete="exercise"
                   className="input-form"
+                  required
                 />
               </div>
             </div>
@@ -71,6 +74,7 @@ const ExerciseForm = ({ id }: FormProps) => {
                   }
                   autoComplete="sets"
                   className="input-form"
+                  required
                 />
               </div>
             </div>
@@ -89,6 +93,7 @@ const ExerciseForm = ({ id }: FormProps) => {
                   }
                   autoComplete="repetitions"
                   className="input-form"
+                  required
                 />
               </div>
             </div>
@@ -107,6 +112,7 @@ const ExerciseForm = ({ id }: FormProps) => {
                   }
                   autoComplete="rpe"
                   className="input-form"
+                  required
                 />
               </div>
             </div>

@@ -15,7 +15,7 @@ const ExerciseModal = ({ setIsOpen, id }: ExerciseModalProps) => {
       <div className=" fixed flex justify-center items-center z-10 w-full ">
         <div className="bg-white rounded-2xl shadow-custom w-6/12 ">
           <div className="h-auto  w-full  bg-white flex justify-center items-center  overflow-hidden rounded-2xl">
-            <ExerciseForm id={id} />
+            <ExerciseForm id={id} setIsOpen={setIsOpen} />
           </div>
           {/* <div className="text-center mt-2">
             <button

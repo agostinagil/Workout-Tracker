@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 import { useState } from "react";
 import ExerciseModal from "../../../components/Modals/Exercise";
+import WorkoutTable from "../../../components/Tables/WorkoutTable";
 // import { FormEvent, useState } from "react";
 // import ShortUniqueId from "short-unique-id";
 
@@ -20,19 +21,15 @@ const Workout = () => {
             className=" h-16 w-44 bg-second rounded-3xl border-white text-lg text-gray-800 font-semibold hover:border-btnBorder focus:outline-primary focus:ring-offset-0"
             onClick={() => setIsOpen(true)}
           >
-            Create exercise
+            Add exercise
           </button>
           {isOpen && id && <ExerciseModal setIsOpen={setIsOpen} id={id} />}
         </div>
-        <h2>Exercises</h2>
-        <ul>
-          {workout?.exercises.map((exercise) => (
-            <li key={exercise.id}>
-              {exercise.name} - {exercise.sets} sets, {exercise.repetitions}{" "}
-              reps, {exercise.rpe} rpe
-            </li>
-          ))}
-        </ul>
+        {workout ? (
+          <WorkoutTable workout={workout} />
+        ) : (
+          <h3>No exercises yet</h3>
+        )}
       </div>
     </>
   );

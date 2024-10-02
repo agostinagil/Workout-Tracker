@@ -3,7 +3,11 @@ import "./createPlan.css";
 import { Workout } from "../../../types/workout";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 
-const CreatePlanForm = () => {
+export interface ModalProps {
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const CreatePlanForm = ({ setIsOpen }: ModalProps) => {
   const { createWorkout } = useWorkoutsContext();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -19,6 +23,7 @@ const CreatePlanForm = () => {
     };
 
     createWorkout(newWorkout);
+    setIsOpen(false);
   };
 
   return (
@@ -39,6 +44,7 @@ const CreatePlanForm = () => {
                 type="text"
                 autoComplete="workout"
                 className="block w-8/12 pl-2 rounded-md border-0 py-1.5 mx-auto text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-third  sm:text-sm sm:leading-6"
+                required
               />
             </div>
           </div>

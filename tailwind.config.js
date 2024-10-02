@@ -12,6 +12,10 @@ module.exports = {
       boxShadow: {
         custom: "0 5px 20px 0 rgba(0, 0, 0, 0.04)",
       },
+      borderWidth: {
+        5: "1px",
+        6: "0.88px",
+      },
     },
     colors: {
       primary: "#cf6b6b",
@@ -21,6 +25,7 @@ module.exports = {
       transparencies: {
         100: "#e1e1e13b",
         200: "#00000070",
+        300: "#f1f3f36b",
       },
       black: colors.black,
       white: colors.white,

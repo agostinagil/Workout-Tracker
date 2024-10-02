@@ -14,7 +14,7 @@ const CreatePlan = ({ setIsOpen }: Props) => {
       <div className=" fixed top-1/3 left-1/2 transform -translate-x-1/2 z-10 w-1/2 ">
         <div className="bg-white rounded-2xl shadow-custom w-full ">
           <div className="h-auto  w-full  bg-white flex justify-center items-center  overflow-hidden rounded-2xl">
-            <CreatePlanForm />
+            <CreatePlanForm setIsOpen={setIsOpen} />
           </div>
           {/* <div className="text-center mt-2">
             <button
