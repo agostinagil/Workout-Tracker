@@ -15,15 +15,21 @@ export interface TableProps {
   workout: Workout;
 }
 
-const WorkoutTable = ({ workout }: TableProps) => {
+// const WorkoutTable = ({ workout }: TableProps) => {
+const WorkoutTable = () => {
   const { removeExercise } = useWorkoutsContext();
   const [isOpen, setIsOpen] = useState(false);
-  const [exerciseToEdit, setExerciseToEdit] = useState<Exercise | null>(null);
-  const [currentWorkoutId, setCurrentWorkoutId] = useState("");
+  // const [exerciseToEdit, setExerciseToEdit] = useState<Exercise | null>(null);
+  // const [currentWorkoutId, setCurrentWorkoutId] = useState("");
 
-  const handleEditClick = (workoutId: string, exercise: Exercise) => {
-    setExerciseToEdit(exercise);
-    setCurrentWorkoutId(workoutId);
+  const { setCurrentExercise, currentWorkout, currentExercise } =
+    useWorkoutsContext();
+
+  const handleEditClick = (exercise: Exercise) => {
+    setCurrentExercise(exercise);
+    // setExerciseToEdit(exercise);
+
+    // setCurrentWorkoutId(workoutId);
     setIsOpen(true);
   };
 
@@ -46,7 +52,7 @@ const WorkoutTable = ({ workout }: TableProps) => {
             </tr>
           </thead>
           <tbody>
-            {workout.exercises.map((exercise) => (
+            {currentWorkout?.exercises.map((exercise) => (
               <tr className="border-t-6 border-gray-400" key={exercise.id}>
                 <td className="py-4 px-4 text-left text-sm border-r-6 border-gray-400 ">
                   {exercise.name}
@@ -66,7 +72,9 @@ const WorkoutTable = ({ workout }: TableProps) => {
                     viewBox="0 0 16 16"
                     fill="currentColor"
                     className="size-4 cursor-pointer mx-auto"
-                    onClick={() => removeExercise(workout.id, exercise.id)}
+                    onClick={() =>
+                      removeExercise(currentWorkout.id, exercise.id)
+                    }
                   >
                     <path
                       fillRule="evenodd"
@@ -77,7 +85,7 @@ const WorkoutTable = ({ workout }: TableProps) => {
                 </td>
                 <td
                   className="py-3 pr-1 text-left font-semibold text-sm cursor-pointer"
-                  onClick={() => handleEditClick(workout.id, exercise)}
+                  onClick={() => handleEditClick(exercise)}
                 >
                   Edit
                 </td>
@@ -85,12 +93,8 @@ const WorkoutTable = ({ workout }: TableProps) => {
             ))}
           </tbody>
         </table>
-        {isOpen && exerciseToEdit && (
-          <ExerciseModal
-            id={currentWorkoutId}
-            setIsOpen={setIsOpen}
-            exerciseToEdit={exerciseToEdit}
-          />
+        {isOpen && currentExercise && (
+          <ExerciseModal id={currentWorkout.id} setIsOpen={setIsOpen} />
         )}
       </div>
     </>

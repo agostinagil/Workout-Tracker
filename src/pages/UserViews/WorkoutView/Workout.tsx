@@ -6,9 +6,14 @@ import WorkoutTable from "../../../components/Tables/WorkoutTable";
 
 const Workout = () => {
   const { id } = useParams();
-  const { state } = useWorkoutsContext();
+  const { state, setCurrentWorkout } = useWorkoutsContext();
   const workout = state.nextWorkouts.find((w) => w.id === id);
   const [isOpen, setIsOpen] = useState(false);
+
+  //added
+  if (workout) {
+    setCurrentWorkout(workout);
+  }
 
   return (
     <>
@@ -24,7 +29,8 @@ const Workout = () => {
           {isOpen && id && <ExerciseModal setIsOpen={setIsOpen} id={id} />}
         </div>
         {workout ? (
-          <WorkoutTable workout={workout} />
+          // <WorkoutTable workout={workout} />
+          <WorkoutTable />
         ) : (
           <h3>No exercises yet</h3>
         )}

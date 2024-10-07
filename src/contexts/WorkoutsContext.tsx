@@ -4,6 +4,7 @@ import {
   ReactNode,
   useContext,
   useReducer,
+  useState,
 } from "react";
 
 import { initialState, workoutsReducer } from "../reducers/workoutsReducer";
@@ -29,6 +30,10 @@ interface WorkoutsContextType {
     exerciseId: string,
     updatedExercise: Exercise
   ) => void;
+  currentWorkout: Workout | null;
+  setCurrentWorkout: (workout: Workout | null) => void;
+  currentExercise: Exercise | null;
+  setCurrentExercise: (exercise: Exercise | null) => void;
 }
 
 interface WorkoutsProviderProps {
@@ -43,6 +48,8 @@ const { Provider } = WorkoutsContext;
 
 export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
   const [state, dispatch] = useReducer(workoutsReducer, initialState);
+  const [currentWorkout, setCurrentWorkout] = useState<Workout | null>(null);
+  const [currentExercise, setCurrentExercise] = useState<Exercise | null>(null);
 
   const createWorkout = (workout: Workout) => {
     dispatch({ type: CREATE_WORKOUT, payload: workout });
@@ -82,6 +89,10 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
         addExercise,
         removeExercise,
         updateExercise,
+        currentWorkout,
+        setCurrentWorkout,
+        currentExercise,
+        setCurrentExercise,
       }}
     >
       {children}

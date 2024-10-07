@@ -1,22 +1,17 @@
+// import { Exercise } from "../../types/workout";
 import ExerciseForm from "../Forms/Exercise/ExerciseForm";
 
 export interface ExerciseModalProps {
   setIsOpen: (isOpen: boolean) => void;
   id: string;
-  exerciseToEdit?: {
-    id: string;
-    name: string;
-    sets: number;
-    repetitions: number;
-    rpe: number;
-  };
+  // exerciseToEdit?: Exercise;
 }
 
 const ExerciseModal = ({
   setIsOpen,
   id,
-  exerciseToEdit,
-}: ExerciseModalProps) => {
+}: // exerciseToEdit,
+ExerciseModalProps) => {
   return (
     <>
       <div
@@ -29,7 +24,7 @@ const ExerciseModal = ({
             <ExerciseForm
               id={id}
               setIsOpen={setIsOpen}
-              exerciseToEdit={exerciseToEdit}
+              // exerciseToEdit={exerciseToEdit}
             />
           </div>
         </div>
