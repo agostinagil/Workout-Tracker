@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { useWorkoutsContext } from "../../contexts/WorkoutsContext";
-import { Workout } from "../../types/workout";
+import { Exercise, Workout } from "../../types/workout";
+import ExerciseModal from "../Modals/Exercise";
 
 const tableTitles = [
   { name: "Exercises", border: true },
   { name: "Sets", border: true },
   { name: "Reps", border: true },
   { name: "RPE", border: true },
-  { name: "Edit", border: false },
+  { name: "", border: false },
 ];
 
 export interface TableProps {
@@ -15,6 +17,16 @@ export interface TableProps {
 
 const WorkoutTable = ({ workout }: TableProps) => {
   const { removeExercise } = useWorkoutsContext();
+  const [isOpen, setIsOpen] = useState(false);
+  const [exerciseToEdit, setExerciseToEdit] = useState<Exercise | null>(null);
+  const [currentWorkoutId, setCurrentWorkoutId] = useState("");
+
+  const handleEditClick = (workoutId: string, exercise: Exercise) => {
+    setExerciseToEdit(exercise);
+    setCurrentWorkoutId(workoutId);
+    setIsOpen(true);
+  };
+
   return (
     <>
       <div className="w-8/12 min-w-full flex justify-center align-middle sm:px-6 mt-12">
@@ -48,12 +60,12 @@ const WorkoutTable = ({ workout }: TableProps) => {
                 <td className="py-3 px-4 text-left text-sm border-r-6 border-gray-400 ">
                   {exercise.rpe}
                 </td>
-                <td className="py-3 px-4 text-left text-sm  border-gray-400 ">
+                <td className="py-3 pl-1 text-sm">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
                     fill="currentColor"
-                    className="size-4"
+                    className="size-4 cursor-pointer mx-auto"
                     onClick={() => removeExercise(workout.id, exercise.id)}
                   >
                     <path
@@ -63,10 +75,23 @@ const WorkoutTable = ({ workout }: TableProps) => {
                     />
                   </svg>
                 </td>
+                <td
+                  className="py-3 pr-1 text-left font-semibold text-sm cursor-pointer"
+                  onClick={() => handleEditClick(workout.id, exercise)}
+                >
+                  Edit
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {isOpen && exerciseToEdit && (
+          <ExerciseModal
+            id={currentWorkoutId}
+            setIsOpen={setIsOpen}
+            exerciseToEdit={exerciseToEdit}
+          />
+        )}
       </div>
     </>
   );

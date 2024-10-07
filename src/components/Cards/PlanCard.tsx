@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Workout } from "../../types/Workout";
+import { Workout } from "../../types/workout";
 
 interface PlanCardProps {
   workout: Workout;
@@ -22,7 +22,7 @@ const PlanCard = ({ workout }: PlanCardProps) => {
             </p>
             <button
               onClick={handleViewWorkout}
-              className="mt-10 mx-auto block w-10/12 rounded-md  px-3 py-2 text-center text-sm font-semibold bg-second text-primary shadow-sm hover:bg-primary hover:text-second"
+              className="mt-10 mx-auto block w-10/12 rounded-md  px-3 py-2 text-center text-sm font-semibold bg-second text-primary shadow-sm hover:bg-primary hover:text-second hover:border-second focus:outline-primary focus:ring-offset-0"
             >
               see workout
             </button>

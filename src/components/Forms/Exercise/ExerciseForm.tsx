@@ -1,14 +1,21 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 import ShortUniqueId from "short-unique-id";
 
 export interface FormProps {
   id: string;
   setIsOpen: (isOpen: boolean) => void;
+  exerciseToEdit?: {
+    id: string;
+    name: string;
+    sets: number;
+    repetitions: number;
+    rpe: number;
+  };
 }
 
-const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
-  const { state, addExercise } = useWorkoutsContext();
+const ExerciseForm = ({ id, setIsOpen, exerciseToEdit }: FormProps) => {
+  const { state, addExercise, updateExercise } = useWorkoutsContext();
   const workout = state.nextWorkouts.find((w) => w.id === id);
 
   const [exercise, setExercise] = useState({
@@ -19,18 +26,32 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
     rpe: 0,
   });
 
+  useEffect(() => {
+    if (exerciseToEdit) {
+      console.log(exerciseToEdit);
+      setExercise(exerciseToEdit);
+    }
+  }, [exerciseToEdit]);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (workout) {
-      const uid = new ShortUniqueId({ length: 8 });
-      const newExercise = {
-        id: uid.rnd(),
-        name: exercise.name,
-        sets: exercise.sets,
-        repetitions: exercise.repetitions,
-        rpe: exercise.rpe,
-      };
-      addExercise(workout.id, newExercise);
+      if (exercise.id) {
+        console.log(exercise.id);
+        updateExercise(workout.id, exercise.id, exercise);
+      } else {
+        const uid = new ShortUniqueId({ length: 8 });
+        const newExercise = {
+          id: uid.rnd(),
+          name: exercise.name,
+          sets: exercise.sets,
+          repetitions: exercise.repetitions,
+          rpe: exercise.rpe,
+        };
+
+        addExercise(workout.id, newExercise);
+      }
+
       setExercise({ id: "", name: "", sets: 0, repetitions: 0, rpe: 0 });
       setIsOpen(false);
     }
@@ -42,7 +63,7 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
           <div className=" grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
               <label htmlFor="exercise" className="label-form">
-                Exercise
+                Exercise Name
               </label>
               <div className="mt-2">
                 <input
@@ -56,6 +77,7 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
                   autoComplete="exercise"
                   className="input-form"
                   required
+                  placeholder={exerciseToEdit ? exerciseToEdit.name : ""}
                 />
               </div>
             </div>
@@ -66,6 +88,8 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
               <div className="mt-2">
                 <input
                   type="number"
+                  min={1}
+                  max={15}
                   name="sets"
                   id="sets"
                   value={exercise.sets}
@@ -75,6 +99,9 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
                   autoComplete="sets"
                   className="input-form"
                   required
+                  placeholder={
+                    exerciseToEdit ? exerciseToEdit.sets.toString() : ""
+                  }
                 />
               </div>
             </div>
@@ -85,6 +112,8 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
               <div className="mt-2">
                 <input
                   type="number"
+                  min={1}
+                  max={30}
                   name="repetitions"
                   id="repetitions"
                   value={exercise.repetitions}
@@ -94,6 +123,9 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
                   autoComplete="repetitions"
                   className="input-form"
                   required
+                  placeholder={
+                    exerciseToEdit ? exerciseToEdit.repetitions.toString() : ""
+                  }
                 />
               </div>
             </div>
@@ -106,6 +138,8 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
                   type="number"
                   name="rpe"
                   id="rpe"
+                  min={1}
+                  max={10}
                   value={exercise.rpe}
                   onChange={(e) =>
                     setExercise({ ...exercise, rpe: +e.target.value })
@@ -113,6 +147,9 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
                   autoComplete="rpe"
                   className="input-form"
                   required
+                  placeholder={
+                    exerciseToEdit ? exerciseToEdit.rpe.toString() : ""
+                  }
                 />
               </div>
             </div>
@@ -121,7 +158,7 @@ const ExerciseForm = ({ id, setIsOpen }: FormProps) => {
             type="submit"
             className="mt-10 w-28 mx-auto block bg-third font-medium text-white"
           >
-            Save
+            {exercise.id ? "Update" : "Save"}
           </button>
         </form>
       </div>

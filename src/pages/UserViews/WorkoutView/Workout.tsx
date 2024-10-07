@@ -3,8 +3,6 @@ import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 import { useState } from "react";
 import ExerciseModal from "../../../components/Modals/Exercise";
 import WorkoutTable from "../../../components/Tables/WorkoutTable";
-// import { FormEvent, useState } from "react";
-// import ShortUniqueId from "short-unique-id";
 
 const Workout = () => {
   const { id } = useParams();

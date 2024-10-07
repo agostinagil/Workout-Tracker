@@ -3,6 +3,7 @@ import {
   CREATE_WORKOUT,
   REMOVE_EXERCISE,
   REMOVE_WORKOUT,
+  UPDATE_EXERCISE,
 } from "../actions/workouts";
 import { WorkoutState } from "../types/workout";
 import {
@@ -10,6 +11,7 @@ import {
   CreateWorkoutAction,
   RemoveExerciseAction,
   RemoveWorkoutAction,
+  UpdateExerciseAction,
   WorkoutAction,
 } from "../types/actionTypes";
 
@@ -26,6 +28,10 @@ const isAddExerciseAction = (
 const isRemoveExerciseAction = (
   action: WorkoutAction
 ): action is RemoveExerciseAction => action.type === REMOVE_EXERCISE;
+
+const isUpdateExerciseAction = (
+  action: WorkoutAction
+): action is UpdateExerciseAction => action.type === UPDATE_EXERCISE;
 
 export const initialState: WorkoutState = {
   nextWorkouts: JSON.parse(localStorage.getItem("nextWorkouts") || "[]"),
@@ -87,6 +93,38 @@ export const workoutsReducer = (
             return {
               ...workout,
               exercises: workout.exercises.filter((ex) => ex.id !== exerciseId),
+            };
+          }
+          return workout;
+        });
+        localStorage.setItem("nextWorkouts", JSON.stringify(updatedWorkouts));
+        return {
+          ...state,
+          nextWorkouts: updatedWorkouts,
+        };
+      }
+      return state;
+    }
+    case UPDATE_EXERCISE: {
+      if (isUpdateExerciseAction(action)) {
+        const { workoutId, exerciseId, updatedExercise } = action.payload;
+        console.log(workoutId, exerciseId, updatedExercise);
+        const updatedWorkouts = state.nextWorkouts.map((workout) => {
+          if (workout.id === workoutId) {
+            const updatedExercises = workout.exercises.map((exercise) => {
+              if (exercise.id === exerciseId) {
+                console.log(exercise.id);
+                return {
+                  ...exercise,
+                  ...updatedExercise,
+                };
+              }
+              return exercise;
+            });
+
+            return {
+              ...workout,
+              exercises: updatedExercises,
             };
           }
           return workout;

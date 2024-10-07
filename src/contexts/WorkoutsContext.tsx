@@ -12,6 +12,7 @@ import {
   CREATE_WORKOUT,
   REMOVE_EXERCISE,
   REMOVE_WORKOUT,
+  UPDATE_EXERCISE,
 } from "../actions/workouts";
 import { Exercise, Workout, WorkoutState } from "../types/workout";
 import { WorkoutAction } from "../types/actionTypes";
@@ -23,6 +24,11 @@ interface WorkoutsContextType {
   removeWorkout: (id: string) => void;
   addExercise: (workoutId: string, exercise: Exercise) => void;
   removeExercise: (workoutId: string, exerciseId: string) => void;
+  updateExercise: (
+    workoutId: string,
+    exerciseId: string,
+    updatedExercise: Exercise
+  ) => void;
 }
 
 interface WorkoutsProviderProps {
@@ -54,6 +60,18 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
     dispatch({ type: REMOVE_EXERCISE, payload: { workoutId, exerciseId } });
   };
 
+  const updateExercise = (
+    workoutId: string,
+    exerciseId: string,
+    updatedExercise: Exercise
+  ) => {
+    // console.log(workoutId, exerciseId, exercise);
+    dispatch({
+      type: UPDATE_EXERCISE,
+      payload: { workoutId, exerciseId, updatedExercise },
+    });
+  };
+
   return (
     <Provider
       value={{
@@ -63,6 +81,7 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
         removeWorkout,
         addExercise,
         removeExercise,
+        updateExercise,
       }}
     >
       {children}

@@ -3,6 +3,7 @@ import {
   CREATE_WORKOUT,
   REMOVE_EXERCISE,
   REMOVE_WORKOUT,
+  UPDATE_EXERCISE,
 } from "../actions/workouts";
 import { Exercise, Workout } from "./workout";
 
@@ -26,8 +27,14 @@ export interface RemoveExerciseAction {
   payload: { workoutId: string; exerciseId: string };
 }
 
+export interface UpdateExerciseAction {
+  type: typeof UPDATE_EXERCISE;
+  payload: { workoutId: string; exerciseId: string; updatedExercise: Exercise };
+}
+
 export type WorkoutAction =
   | CreateWorkoutAction
   | RemoveWorkoutAction
   | AddExerciseAction
-  | RemoveExerciseAction;
+  | RemoveExerciseAction
+  | UpdateExerciseAction;
