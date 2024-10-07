@@ -16,14 +16,6 @@ const CreatePlan = ({ setIsOpen }: Props) => {
           <div className="h-auto  w-full  bg-white flex justify-center items-center  overflow-hidden rounded-2xl">
             <CreatePlanForm setIsOpen={setIsOpen} />
           </div>
-          {/* <div className="text-center mt-2">
-            <button
-              className="px-4 py-2 bg-red-500 text-white rounded-lg"
-              onClick={() => setIsOpen(false)}
-            >
-              close
-            </button>
-          </div> */}
         </div>
       </div>
     </>
