@@ -1,10 +1,9 @@
+import { CREATE_WORKOUT, REMOVE_WORKOUT } from "../actions/workouts";
 import {
   ADD_EXERCISE,
-  CREATE_WORKOUT,
-  REMOVE_EXERCISE,
-  REMOVE_WORKOUT,
   UPDATE_EXERCISE,
-} from "../actions/workouts";
+  REMOVE_EXERCISE,
+} from "../actions/exercise";
 import { WorkoutState } from "../types/workout";
 import {
   AddExerciseAction,

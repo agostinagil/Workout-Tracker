@@ -93,7 +93,7 @@ const WorkoutTable = () => {
             ))}
           </tbody>
         </table>
-        {isOpen && currentExercise && (
+        {isOpen && currentExercise && currentWorkout && (
           <ExerciseModal id={currentWorkout.id} setIsOpen={setIsOpen} />
         )}
       </div>

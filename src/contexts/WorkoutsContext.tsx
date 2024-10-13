@@ -8,13 +8,12 @@ import {
 } from "react";
 
 import { initialState, workoutsReducer } from "../reducers/workoutsReducer";
+import { CREATE_WORKOUT, REMOVE_WORKOUT } from "../actions/workouts";
 import {
-  ADD_EXERCISE,
-  CREATE_WORKOUT,
   REMOVE_EXERCISE,
-  REMOVE_WORKOUT,
+  ADD_EXERCISE,
   UPDATE_EXERCISE,
-} from "../actions/workouts";
+} from "../actions/exercise";
 import { Exercise, Workout, WorkoutState } from "../types/workout";
 import { WorkoutAction } from "../types/actionTypes";
 
