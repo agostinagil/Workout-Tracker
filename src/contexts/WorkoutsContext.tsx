@@ -13,7 +13,7 @@ import {
   REMOVE_EXERCISE,
   ADD_EXERCISE,
   UPDATE_EXERCISE,
-} from "../actions/exercise";
+} from "../actions/exercises";
 import { Exercise, Workout, WorkoutState } from "../types/workout";
 import { WorkoutAction } from "../types/actionTypes";
 

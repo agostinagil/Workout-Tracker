@@ -1,15 +1,20 @@
-import { CREATE_WORKOUT, REMOVE_WORKOUT } from "../actions/workouts";
+import {
+  CREATE_WORKOUT,
+  REMOVE_WORKOUT,
+  START_TRACKING,
+} from "../actions/workouts";
 import {
   ADD_EXERCISE,
   UPDATE_EXERCISE,
   REMOVE_EXERCISE,
-} from "../actions/exercise";
+} from "../actions/exercises";
 import { WorkoutState } from "../types/workout";
 import {
   AddExerciseAction,
   CreateWorkoutAction,
   RemoveExerciseAction,
   RemoveWorkoutAction,
+  StartTracking,
   UpdateExerciseAction,
   WorkoutAction,
 } from "../types/actionTypes";
@@ -32,6 +37,10 @@ const isUpdateExerciseAction = (
   action: WorkoutAction
 ): action is UpdateExerciseAction => action.type === UPDATE_EXERCISE;
 
+const isStartTrackingAction = (
+  action: WorkoutAction
+): action is StartTracking => action.type === START_TRACKING;
+
 export const initialState: WorkoutState = {
   nextWorkouts: JSON.parse(localStorage.getItem("nextWorkouts") || "[]"),
 };
@@ -43,7 +52,18 @@ export const workoutsReducer = (
   switch (action.type) {
     case CREATE_WORKOUT: {
       if (isCreateAction(action)) {
-        const newWorkout = { ...action.payload, exercises: [] };
+        const newWorkout = {
+          ...action.payload,
+          exercises: [],
+          tracking: {
+            id: "",
+            date: null,
+            start: 0,
+            end: 0,
+            exercises: { name: "", weight: 0 },
+            duration: 0,
+          },
+        };
         const newWorkouts = [...state.nextWorkouts, newWorkout];
         localStorage.setItem("nextWorkouts", JSON.stringify(newWorkouts));
 
@@ -136,6 +156,11 @@ export const workoutsReducer = (
       }
       return state;
     }
+    case START_TRACKING: {
+      if (isStartTrackingAction(action)) {
+      }
+    }
+
     default:
       return state;
   }

@@ -1,10 +1,14 @@
-import { CREATE_WORKOUT, REMOVE_WORKOUT } from "../actions/workouts";
+import {
+  CREATE_WORKOUT,
+  REMOVE_WORKOUT,
+  START_TRACKING,
+} from "../actions/workouts";
 import {
   ADD_EXERCISE,
   REMOVE_EXERCISE,
   UPDATE_EXERCISE,
-} from "../actions/exercise";
-import { Exercise, Workout } from "./workout";
+} from "../actions/exercises";
+import { Exercise, Tracking, Workout } from "./workout";
 
 export interface CreateWorkoutAction {
   type: typeof CREATE_WORKOUT;
@@ -14,6 +18,11 @@ export interface CreateWorkoutAction {
 export interface RemoveWorkoutAction {
   type: typeof REMOVE_WORKOUT;
   payload: { id: string };
+}
+
+export interface StartTracking {
+  type: typeof START_TRACKING;
+  payload: Tracking;
 }
 
 export interface AddExerciseAction {
@@ -36,4 +45,5 @@ export type WorkoutAction =
   | RemoveWorkoutAction
   | AddExerciseAction
   | RemoveExerciseAction
-  | UpdateExerciseAction;
+  | UpdateExerciseAction
+  | StartTracking;
