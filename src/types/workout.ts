@@ -2,7 +2,7 @@ export interface Workout {
   id: string;
   name: string;
   exercises: Exercise[];
-  tracking: Tracking;
+  tracking: Tracking[];
 }
 
 export interface WorkoutState {

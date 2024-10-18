@@ -19,17 +19,13 @@ export interface TableProps {
 const WorkoutTable = () => {
   const { removeExercise } = useWorkoutsContext();
   const [isOpen, setIsOpen] = useState(false);
-  // const [exerciseToEdit, setExerciseToEdit] = useState<Exercise | null>(null);
-  // const [currentWorkoutId, setCurrentWorkoutId] = useState("");
 
   const { setCurrentExercise, currentWorkout, currentExercise } =
     useWorkoutsContext();
 
   const handleEditClick = (exercise: Exercise) => {
     setCurrentExercise(exercise);
-    // setExerciseToEdit(exercise);
 
-    // setCurrentWorkoutId(workoutId);
     setIsOpen(true);
   };
 

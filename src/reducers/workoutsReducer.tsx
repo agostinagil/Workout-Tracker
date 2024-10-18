@@ -55,14 +55,7 @@ export const workoutsReducer = (
         const newWorkout = {
           ...action.payload,
           exercises: [],
-          tracking: {
-            id: "",
-            date: null,
-            start: 0,
-            end: 0,
-            exercises: { name: "", weight: 0 },
-            duration: 0,
-          },
+          tracking: [],
         };
         const newWorkouts = [...state.nextWorkouts, newWorkout];
         localStorage.setItem("nextWorkouts", JSON.stringify(newWorkouts));

@@ -30,12 +30,7 @@ const Workout = () => {
           </button>
           {isOpen && id && <ExerciseModal setIsOpen={setIsOpen} id={id} />}
         </div>
-        {workout ? (
-          // <WorkoutTable workout={workout} />
-          <WorkoutTable />
-        ) : (
-          <h3>No exercises yet</h3>
-        )}
+        {workout ? <WorkoutTable /> : <h3>No exercises yet</h3>}
         <div className="flex justify-center mt-8">
           <button
             className=" h-10 w-40 bg-second  rounded-3xl border-white text-sm text-gray-800 font-semibold hover:border-btnBorder focus:outline-primary focus:ring-offset-0"
@@ -43,7 +38,7 @@ const Workout = () => {
           >
             Start tracking
           </button>
-          {isOpenTrack && <TrackingModal />}
+          {isOpenTrack && <TrackingModal setIsOpen={setIsOpenTrack} />}
         </div>
       </div>
     </>
