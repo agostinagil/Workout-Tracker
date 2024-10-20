@@ -17,11 +17,13 @@ export interface Exercise {
   rpe: number;
 }
 
+export interface TrackExercise {
+  name: string;
+  weight: number;
+}
+
 export interface Tracking {
   id: string;
   date: Date | null;
-  start: number;
-  end: number;
-  exercises: { name: string; weight: number };
-  duration: number;
+  exercises: TrackExercise[];
 }

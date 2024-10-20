@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExerciseModal from "../../../components/Modals/Exercise";
 import WorkoutTable from "../../../components/Tables/WorkoutTable";
 import TrackingModal from "../../../components/Modals/Tracking";
@@ -12,10 +12,11 @@ const Workout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenTrack, setIsOpenTrack] = useState(false);
 
-  //added
-  if (workout) {
-    setCurrentWorkout(workout);
-  }
+  useEffect(() => {
+    if (workout) {
+      setCurrentWorkout(workout);
+    }
+  }, [workout, setCurrentWorkout]);
 
   return (
     <>
