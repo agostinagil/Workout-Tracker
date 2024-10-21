@@ -13,7 +13,9 @@ const Dashboard = () => {
         {workouts.length > 0 ? (
           <>
             <div className=" flex flex-col place-content-center justify-center  py-24 ">
-              <h1 className="text-center ">Hi!</h1>
+              <h1 className="text-center text-white font-bold text-shadow ">
+                Choose your next workout!
+              </h1>
               <CreateWorkoutBtn />
               <div
                 className={`grid ${

@@ -13,7 +13,7 @@ import logo from "../assets/logo.png";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Team", href: "/", current: false },
+  { name: "Tracking", href: "/tracking", current: false },
   { name: "Projects", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
 ];
