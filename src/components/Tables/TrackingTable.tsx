@@ -1,8 +1,13 @@
 import { FormEvent, useState } from "react";
 import { useWorkoutsContext } from "../../contexts/WorkoutsContext";
+import ShortUniqueId from "short-unique-id";
 
-const TrackingTable = () => {
-  const { state, currentWorkout } = useWorkoutsContext();
+export interface TableProps {
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const TrackingTable = ({ setIsOpen }: TableProps) => {
+  const { state, currentWorkout, startTracking } = useWorkoutsContext();
   const [weights, setWeights] = useState<{ [key: string]: number }>({});
 
   const exercises = state.nextWorkouts
@@ -25,32 +30,40 @@ const TrackingTable = () => {
     const year = date.getFullYear();
     const formattedDate = `${day}/${month}/${year}`;
 
+    const uid = new ShortUniqueId();
+    const id = uid.rnd();
+
     const trackingData = {
+      id: id,
       date: formattedDate,
       exercises: exercises.map((exercise) => ({
         name: exercise,
         weight: weights[exercise] || 0,
       })),
     };
-
-    console.log(trackingData);
+    if (currentWorkout?.id) {
+      startTracking(currentWorkout.id, trackingData);
+      setIsOpen(false);
+    }
   };
 
   return (
     <>
       <div className=" min-w-full flex-col justify-center items-center align-middle sm:px-2 my-8 ">
         <table className="intent-0 border-collapse w-3/4 mx-auto bg-transparencies-300 rounded-md">
-          <tr>
-            <th className="py-3 px-4 text-left text-base font-semibold">
-              Exercise
-            </th>
-            <th className="py-3 px-4 text-left text-base font-semibold">
-              Weight (kg)
-            </th>
-          </tr>
+          <thead>
+            <tr>
+              <th className="py-3 px-4 text-left text-base font-semibold">
+                Exercise
+              </th>
+              <th className="py-3 px-4 text-left text-base font-semibold">
+                Weight (kg)
+              </th>
+            </tr>
+          </thead>
           <tbody>
-            {exercises.map((ex) => (
-              <tr className="border-t-6 border-gray-400">
+            {exercises.map((ex, i) => (
+              <tr className="border-t-6 border-gray-400" key={i}>
                 <td className="py-4 px-4 text-left text-sm border-r-6 border-gray-400 ">
                   {ex}
                 </td>

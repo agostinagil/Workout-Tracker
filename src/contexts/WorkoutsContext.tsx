@@ -8,13 +8,17 @@ import {
 } from "react";
 
 import { initialState, workoutsReducer } from "../reducers/workoutsReducer";
-import { CREATE_WORKOUT, REMOVE_WORKOUT } from "../actions/workouts";
+import {
+  CREATE_WORKOUT,
+  REMOVE_WORKOUT,
+  START_TRACKING,
+} from "../actions/workouts";
 import {
   REMOVE_EXERCISE,
   ADD_EXERCISE,
   UPDATE_EXERCISE,
 } from "../actions/exercises";
-import { Exercise, Workout, WorkoutState } from "../types/workout";
+import { Exercise, Tracking, Workout, WorkoutState } from "../types/workout";
 import { WorkoutAction } from "../types/actionTypes";
 
 interface WorkoutsContextType {
@@ -33,6 +37,7 @@ interface WorkoutsContextType {
   setCurrentWorkout: (workout: Workout | null) => void;
   currentExercise: Exercise | null;
   setCurrentExercise: (exercise: Exercise | null) => void;
+  startTracking: (workoutId: string, tracking: Tracking) => void;
 }
 
 interface WorkoutsProviderProps {
@@ -78,6 +83,10 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
     });
   };
 
+  const startTracking = (workoutId: string, tracking: Tracking) => {
+    dispatch({ type: START_TRACKING, payload: { workoutId, tracking } });
+  };
+
   return (
     <Provider
       value={{
@@ -92,6 +101,7 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
         setCurrentWorkout,
         currentExercise,
         setCurrentExercise,
+        startTracking,
       }}
     >
       {children}

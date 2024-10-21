@@ -20,11 +20,6 @@ export interface RemoveWorkoutAction {
   payload: { id: string };
 }
 
-export interface StartTracking {
-  type: typeof START_TRACKING;
-  payload: Tracking;
-}
-
 export interface AddExerciseAction {
   type: typeof ADD_EXERCISE;
   payload: { workoutId: string; exercise: Exercise };
@@ -40,10 +35,15 @@ export interface UpdateExerciseAction {
   payload: { workoutId: string; exerciseId: string; updatedExercise: Exercise };
 }
 
+export interface StartTrackingAction {
+  type: typeof START_TRACKING;
+  payload: { workoutId: string; tracking: Tracking };
+}
+
 export type WorkoutAction =
   | CreateWorkoutAction
   | RemoveWorkoutAction
   | AddExerciseAction
   | RemoveExerciseAction
   | UpdateExerciseAction
-  | StartTracking;
+  | StartTrackingAction;

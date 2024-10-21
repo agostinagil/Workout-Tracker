@@ -24,6 +24,6 @@ export interface TrackExercise {
 
 export interface Tracking {
   id: string;
-  date: Date | null;
+  date: string;
   exercises: TrackExercise[];
 }

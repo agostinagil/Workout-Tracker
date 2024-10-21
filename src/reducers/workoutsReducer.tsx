@@ -15,6 +15,7 @@ import {
   RemoveExerciseAction,
   RemoveWorkoutAction,
   StartTracking,
+  StartTrackingAction,
   UpdateExerciseAction,
   WorkoutAction,
 } from "../types/actionTypes";
@@ -39,7 +40,7 @@ const isUpdateExerciseAction = (
 
 const isStartTrackingAction = (
   action: WorkoutAction
-): action is StartTracking => action.type === START_TRACKING;
+): action is StartTrackingAction => action.type === START_TRACKING;
 
 export const initialState: WorkoutState = {
   nextWorkouts: JSON.parse(localStorage.getItem("nextWorkouts") || "[]"),
@@ -151,7 +152,19 @@ export const workoutsReducer = (
     }
     case START_TRACKING: {
       if (isStartTrackingAction(action)) {
+        const { workoutId, tracking } = action.payload;
+        const newTracking = state.nextWorkouts.map((workout) =>
+          workout.id === workoutId
+            ? { ...workout, tracking: [...workout.tracking, tracking] }
+            : workout
+        );
+        localStorage.setItem("nextWorkouts", JSON.stringify(newTracking));
+        return {
+          ...state,
+          nextWorkouts: newTracking,
+        };
       }
+      return state;
     }
 
     default:

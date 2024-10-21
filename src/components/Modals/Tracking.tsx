@@ -14,7 +14,7 @@ const TrackingModal = ({ setIsOpen }: TableProps) => {
       <div className=" fixed flex justify-center items-center z-10 w-3/5 top-1/3 ">
         <div className="bg-white rounded-2xl shadow-custom w-full ">
           <div className="h-auto  w-full  bg-second flex justify-center items-center  overflow-hidden rounded-2xl">
-            <TrackingTable />
+            <TrackingTable setIsOpen={setIsOpen} />
           </div>
         </div>
       </div>
