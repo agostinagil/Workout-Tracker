@@ -20,12 +20,12 @@ const Dashboard = () => {
               </h1>
               <CreateWorkoutBtn />
               <div
-                className={`grid ${
-                  hasFewCards
-                    ? "grid-cols-1 sm:grid-cols-2 gap-6 place-items-center" // Para centrar y organizar en una fila cuando hay 1 o 2 cards
-                    : "lg:grid-cols-3 sm:grid-cols-2 gap-6 justify-items-center"
-                } ${
-                  isOneCard && "grid-cols-1 sm:grid-cols-1"
+                className={` ${
+                  isOneCard
+                    ? "flex"
+                    : hasFewCards
+                    ? "grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center"
+                    : "grid lg:grid-cols-3 sm:grid-cols-2 gap-6 "
                 } justify-center h-4/5 mt-8`}
               >
                 {state.nextWorkouts.map((workout, i) => (
