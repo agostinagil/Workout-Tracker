@@ -4,6 +4,7 @@ import Example from "../components/Navbar";
 import Dashboard from "../pages/UserViews/Dashboard/Dashboard";
 import Workout from "../pages/UserViews/WorkoutView/Workout";
 import TrackingView from "../pages/UserViews/TrackingView/TrackingView";
+import SingleTracking from "../pages/UserViews/TrackingView/SingleTracking";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/workout/:id" element={<Workout />} />
         <Route path="/tracking" element={<TrackingView />} />
+        <Route path="/tracking/:id" element={<SingleTracking />} />
       </Routes>
     </BrowserRouter>
   );

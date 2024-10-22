@@ -14,7 +14,6 @@ import {
   CreateWorkoutAction,
   RemoveExerciseAction,
   RemoveWorkoutAction,
-  StartTracking,
   StartTrackingAction,
   UpdateExerciseAction,
   WorkoutAction,
