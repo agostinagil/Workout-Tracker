@@ -12,10 +12,10 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logo.png";
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", current: true },
-  { name: "Tracking", href: "/tracking", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Tracking", href: "/tracking" },
+  { name: "Projects", href: "#" },
+  { name: "Calendar", href: "#" },
 ];
 
 function classNames(...classes: string[]) {
@@ -23,6 +23,8 @@ function classNames(...classes: string[]) {
 }
 
 export default function Example() {
+  const pathname = window.location.pathname.slice(1);
+
   return (
     <Disclosure
       as="nav"
@@ -55,12 +57,16 @@ export default function Example() {
                   <a
                     key={item.name}
                     href={item.href}
-                    aria-current={item.current ? "page" : undefined}
+                    aria-current={
+                      item.name.toLocaleLowerCase() === pathname
+                        ? "page"
+                        : undefined
+                    }
                     className={classNames(
-                      item.current
-                        ? "bg-third text-white hover:text-second"
-                        : "text-gray-600 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-base font-semibold"
+                      item.name.toLocaleLowerCase() === pathname
+                        ? "bg-third text-white hover:text-gray-100 rounded-md "
+                        : "text-gray-600 hover:underline hover:underline-offset- hover:decoration-primary hover:underline-offset-8 hover:text-gray-700",
+                      "px-3 py-2 text-base font-semibold"
                     )}
                   >
                     {item.name}
@@ -134,9 +140,11 @@ export default function Example() {
               key={item.name}
               as="a"
               href={item.href}
-              aria-current={item.current ? "page" : undefined}
+              aria-current={
+                item.name.toLocaleLowerCase() === pathname ? "page" : undefined
+              }
               className={classNames(
-                item.current
+                item.name.toLocaleLowerCase() === pathname
                   ? "bg-primary text-white"
                   : "text-third hover:bg-gray-300 hover:text-white",
                 "block rounded-md px-3 py-2 text-base font-medium"
