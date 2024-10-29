@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Workout } from "../../types/workout";
 import Delete from "../../Icons/Delete";
+import { useWorkoutsContext } from "../../contexts/WorkoutsContext";
 
 interface PlanCardProps {
   workout: Workout;
@@ -9,9 +10,12 @@ interface PlanCardProps {
 
 const PlanCard = ({ workout, isTrack }: PlanCardProps) => {
   const navigate = useNavigate();
+  const { setCurrentWorkout } = useWorkoutsContext();
 
   const handleViewWorkout = () => {
     if (isTrack) {
+      localStorage.setItem("currentWorkout", JSON.stringify(workout));
+      setCurrentWorkout(workout);
       navigate(`/tracking/${workout.id}`);
     } else {
       navigate(`/workout/${workout.id}`);

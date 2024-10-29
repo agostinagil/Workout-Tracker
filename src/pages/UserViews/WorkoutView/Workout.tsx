@@ -11,6 +11,7 @@ const Workout = () => {
   const workout = state.nextWorkouts.find((w) => w.id === id);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenTrack, setIsOpenTrack] = useState(false);
+  const exercises = workout?.exercises || [];
 
   useEffect(() => {
     if (workout) {
@@ -34,8 +35,9 @@ const Workout = () => {
         {workout ? <WorkoutTable /> : <h3>No exercises yet</h3>}
         <div className="flex justify-center mt-8">
           <button
-            className=" h-10 w-40 bg-second  rounded-3xl border-white text-sm text-gray-800 font-semibold hover:border-btnBorder focus:outline-primary focus:ring-offset-0"
+            className=" h-10 w-40 bg-second  rounded-3xl border-white text-sm text-gray-800 font-semibold hover:border-btnBorder focus:outline-primary focus:ring-offset-0 disabled:opacity-75 disabled:cursor-not-allowed"
             onClick={() => setIsOpenTrack(true)}
+            disabled={exercises.length === 0}
           >
             Start tracking
           </button>

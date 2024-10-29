@@ -23,6 +23,14 @@ const TrackingTable = ({ setIsOpen }: TableProps) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    const emptyFields = exercises.some(
+      (ex) => weights[ex] === undefined || weights[ex] === null
+    );
+
+    if (emptyFields) {
+      alert("Please fill the weights");
+      return;
+    }
 
     const date = new Date();
     const day = String(date.getDate()).padStart(2, "0");
@@ -41,7 +49,7 @@ const TrackingTable = ({ setIsOpen }: TableProps) => {
       date: formattedDate,
       exercises: exercises.map((exercise) => ({
         name: exercise,
-        weight: weights[exercise] || 0,
+        weight: weights[exercise],
       })),
     };
     if (currentWorkout?.id) {
@@ -75,6 +83,7 @@ const TrackingTable = ({ setIsOpen }: TableProps) => {
                     type="number"
                     min={1}
                     name="weight"
+                    required
                     value={weights[ex] || ""}
                     onChange={(e) =>
                       handleWeightChange(ex, Number(e.target.value))

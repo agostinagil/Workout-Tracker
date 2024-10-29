@@ -28,8 +28,8 @@ const TrackingView = () => {
               : "grid lg:grid-cols-3 sm:grid-cols-2 gap-6 "
           } justify-center h-4/5 mt-8`}
         >
-          {workouts.map((workout) => (
-            <PlanCard workout={workout} isTrack={true} />
+          {workouts.map((workout, i) => (
+            <PlanCard workout={workout} key={i} isTrack={true} />
           ))}
         </div>
       </div>
