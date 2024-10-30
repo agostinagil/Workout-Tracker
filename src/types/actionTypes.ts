@@ -1,5 +1,6 @@
 import {
   CREATE_WORKOUT,
+  REMOVE_TRACKING,
   REMOVE_WORKOUT,
   START_TRACKING,
 } from "../actions/workouts";
@@ -40,10 +41,16 @@ export interface StartTrackingAction {
   payload: { workoutId: string; tracking: Tracking };
 }
 
+export interface RemoveTrackingAction {
+  type: typeof REMOVE_TRACKING;
+  payload: { trackingId: string };
+}
+
 export type WorkoutAction =
   | CreateWorkoutAction
   | RemoveWorkoutAction
   | AddExerciseAction
   | RemoveExerciseAction
   | UpdateExerciseAction
-  | StartTrackingAction;
+  | StartTrackingAction
+  | RemoveTrackingAction;

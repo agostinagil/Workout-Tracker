@@ -2,10 +2,18 @@ import { useWorkoutsContext } from "../contexts/WorkoutsContext";
 
 export interface IconProps {
   id: string;
+  isTracking?: boolean;
 }
 
-const Delete = ({ id }: IconProps) => {
-  const { removeWorkout } = useWorkoutsContext();
+const Delete = ({ id, isTracking }: IconProps) => {
+  const { removeWorkout, removeTracking } = useWorkoutsContext();
+  const handleClick = () => {
+    if (isTracking) {
+      removeTracking(id);
+    } else {
+      removeWorkout(id);
+    }
+  };
   return (
     <>
       <svg
@@ -15,7 +23,7 @@ const Delete = ({ id }: IconProps) => {
         strokeWidth={1.5}
         stroke="currentColor"
         className="size-6 text-primary hover:cursor-pointer"
-        onClick={() => removeWorkout(id)}
+        onClick={() => handleClick()}
       >
         <path
           strokeLinecap="round"

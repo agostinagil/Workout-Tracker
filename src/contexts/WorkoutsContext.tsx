@@ -10,6 +10,7 @@ import {
 import { initialState, workoutsReducer } from "../reducers/workoutsReducer";
 import {
   CREATE_WORKOUT,
+  REMOVE_TRACKING,
   REMOVE_WORKOUT,
   START_TRACKING,
 } from "../actions/workouts";
@@ -38,6 +39,7 @@ interface WorkoutsContextType {
   currentExercise: Exercise | null;
   setCurrentExercise: (exercise: Exercise | null) => void;
   startTracking: (workoutId: string, tracking: Tracking) => void;
+  removeTracking: (trackingId: string) => void;
 }
 
 interface WorkoutsProviderProps {
@@ -87,6 +89,10 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
     dispatch({ type: START_TRACKING, payload: { workoutId, tracking } });
   };
 
+  const removeTracking = (trackingId: string) => {
+    dispatch({ type: REMOVE_TRACKING, payload: { trackingId } });
+  };
+
   return (
     <Provider
       value={{
@@ -102,6 +108,7 @@ export const WorkoutsProvider = ({ children }: WorkoutsProviderProps) => {
         currentExercise,
         setCurrentExercise,
         startTracking,
+        removeTracking,
       }}
     >
       {children}

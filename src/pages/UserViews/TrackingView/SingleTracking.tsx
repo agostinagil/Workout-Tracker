@@ -1,18 +1,32 @@
+import { useParams } from "react-router-dom";
+import Delete from "../../../Icons/Delete";
+import { Tracking } from "../../../types/workout";
+import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
+import { useEffect } from "react";
+
 const SingleTracking = () => {
-  const workout = localStorage.getItem("currentWorkout") || "";
-  const newWork = workout ? JSON.parse(workout) : null;
-  const tracking = newWork.tracking;
+  const { id } = useParams();
+  const { state, setCurrentWorkout } = useWorkoutsContext();
+  const workout = state.nextWorkouts.find((w) => w.id === id);
+  const tracking = workout?.tracking || [];
+
+  useEffect(() => {
+    if (workout) {
+      setCurrentWorkout(workout);
+    }
+  }, [workout, setCurrentWorkout]);
 
   return (
     <div className="min-h-screen bg-gradient pt-28">
       <h1 className="text-center mb-10 font-bold text-white text-shadow">
-        Progress {newWork.name}
+        Progress {workout?.name}
       </h1>
-      {tracking?.map((track, i) => (
+      {tracking?.map((track: Tracking, i: number) => (
         <div key={i}>
           <h5 className="font-semibold text-xl text-center my-4 text-white">
             {track.date}
           </h5>
+          <Delete id={track.id} isTracking={true} />
           <table className="intent-0 border-collapse w-1/2 mx-auto bg-transparencies-300 rounded-md">
             <thead>
               <tr>
