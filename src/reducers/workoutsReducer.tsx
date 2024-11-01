@@ -19,7 +19,7 @@ import {
   StartTrackingAction,
   UpdateExerciseAction,
   WorkoutAction,
-} from "../types/actionTypes";
+} from "../types/workoutActionTypes";
 
 const isRemoveAction = (action: WorkoutAction): action is RemoveWorkoutAction =>
   action.type === REMOVE_WORKOUT;

@@ -20,6 +20,7 @@ const CreatePlanForm = ({ setIsOpen }: ModalProps) => {
       id: uid.rnd(),
       name: workout,
       exercises: [],
+      tracking: [],
     };
 
     createWorkout(newWorkout);

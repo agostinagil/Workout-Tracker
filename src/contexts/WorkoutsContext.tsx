@@ -20,7 +20,7 @@ import {
   UPDATE_EXERCISE,
 } from "../actions/exercises";
 import { Exercise, Tracking, Workout, WorkoutState } from "../types/workout";
-import { WorkoutAction } from "../types/actionTypes";
+import { WorkoutAction } from "../types/workoutActionTypes";
 
 interface WorkoutsContextType {
   state: WorkoutState;
