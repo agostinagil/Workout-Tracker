@@ -24,7 +24,7 @@ export interface DeleteUserAction {
 
 export interface LoginAction {
   type: typeof LOGIN;
-  payload: { username: string; password: string; isLoggedIn: boolean };
+  payload: { id: string };
 }
 
 export interface LogoutAction {

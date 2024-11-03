@@ -13,7 +13,7 @@ export const initialState: AuthState = {
   users: JSON.parse(localStorage.getItem("users") || "[]"),
 };
 
-const isCreateAction = (action: AuthActions): actions is CreateUserAction =>
+const isCreateAction = (action: AuthActions): action is CreateUserAction =>
   action.type === CREATE_USER;
 
 const isDeleteAction = (action: AuthActions): action is DeleteUserAction =>
@@ -28,7 +28,7 @@ const isLogoutAction = (action: AuthActions): action is LogoutAction =>
 export const authReducer = (
   state: AuthState = initialState,
   action: AuthActions
-) => {
+): AuthState => {
   switch (action.type) {
     case CREATE_USER: {
       if (isCreateAction(action)) {
@@ -38,6 +38,19 @@ export const authReducer = (
         return {
           ...state,
           users: newUser,
+        };
+      }
+      return state;
+    }
+    case LOGIN: {
+      if (isLoginAction(action)) {
+        const user = state.users.map((u) =>
+          u.id === action.payload.id ? { ...u, isLoggedIn: true } : u
+        );
+        localStorage.setItem("users", JSON.stringify(user));
+        return {
+          ...state,
+          users: user,
         };
       }
       return state;

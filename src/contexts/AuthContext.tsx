@@ -7,12 +7,13 @@ import {
 } from "react";
 import { AuthActions, AuthState, User } from "../types/auth";
 import { authReducer, initialState } from "../reducers/authReducer";
-import { CREATE_USER } from "../actions/auth";
+import { CREATE_USER, LOGIN } from "../actions/auth";
 
 export interface AuthContenxtType {
   state: AuthState;
   dispatch: Dispatch<AuthActions>;
   createUser: (user: User) => void;
+  login: (id: string) => void;
 }
 
 interface ProviderProps {
@@ -31,8 +32,14 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     dispatch({ type: CREATE_USER, payload: user });
   };
 
+  const login = (id: string) => {
+    dispatch({ type: LOGIN, payload: { id } });
+  };
+
   return (
-    <Provider value={{ createUser, state, dispatch }}>{children}</Provider>
+    <Provider value={{ createUser, state, dispatch, login }}>
+      {children}
+    </Provider>
   );
 };
 

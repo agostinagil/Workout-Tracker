@@ -13,8 +13,10 @@ import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import RegisterModal from "./Modals/Register";
+import { useAuthContext } from "../contexts/AuthContext";
+import LoginModal from "./Modals/Login";
 
-const createAccount = "Create an account";
+const createAccount = "Create account";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
@@ -28,10 +30,15 @@ function classNames(...classes: string[]) {
 
 export default function Navbar() {
   const [openModal, setOpenModal] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const pathname = window.location.pathname.slice(1);
   const navigate = useNavigate();
+  const { state } = useAuthContext();
+
+  const userLogged = state.users.filter((user) => user.isLoggedIn === true);
 
   const handleOpen = () => setOpenModal(true);
+  const handleOpenLogin = () => setOpenLogin(true);
 
   const handleLogo = () => {
     navigate("/");
@@ -84,7 +91,7 @@ export default function Navbar() {
                         item.name.toLocaleLowerCase() === pathname
                           ? "bg-third text-white hover:text-gray-100 rounded-md "
                           : "text-gray-600 hover:underline hover:underline-offset- hover:decoration-primary hover:underline-offset-8 hover:text-gray-700",
-                        "px-3 py-2 text-base font-semibold"
+                        "px-3 py-2 text-base font-semibold hover:cursor-pointer"
                       )}
                       onClick={() =>
                         item.name === createAccount ? handleOpen() : undefined
@@ -120,35 +127,51 @@ export default function Navbar() {
                     </svg>
                   </MenuButton>
                 </div>
-                <MenuItems
-                  transition
-                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-                >
-                  <MenuItem>
-                    <a
-                      href="/dashboard"
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                    >
-                      Your Profile
-                    </a>
-                  </MenuItem>
-                  <MenuItem>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                  </MenuItem>
-                  <MenuItem>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                    >
-                      Sign out
-                    </a>
-                  </MenuItem>
-                </MenuItems>
+                {userLogged.length > 0 ? (
+                  <MenuItems
+                    transition
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                  >
+                    <MenuItem>
+                      <a
+                        href="/dashboard"
+                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      >
+                        Your Profile
+                      </a>
+                    </MenuItem>
+                    <MenuItem>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      >
+                        Settings
+                      </a>
+                    </MenuItem>
+                    <MenuItem>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                      >
+                        Sign out
+                      </a>
+                    </MenuItem>
+                  </MenuItems>
+                ) : (
+                  <MenuItems
+                    transition
+                    className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                  >
+                    <MenuItem>
+                      <a
+                        className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        onClick={() => handleOpenLogin()}
+                      >
+                        Sign in
+                      </a>
+                    </MenuItem>
+                  </MenuItems>
+                )}
               </Menu>
             </div>
           </div>
@@ -182,6 +205,7 @@ export default function Navbar() {
         </DisclosurePanel>
       </Disclosure>
       {openModal && <RegisterModal setIsOpen={setOpenModal} />}
+      {openLogin && <LoginModal setIsOpenLogin={setOpenLogin} />}
     </>
   );
 }
