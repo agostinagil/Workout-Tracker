@@ -15,6 +15,7 @@ export interface AuthContenxtType {
   createUser: (user: User) => void;
   login: (id: string) => void;
   logout: (id: string) => void;
+  isLoggedIn: () => boolean;
 }
 
 interface ProviderProps {
@@ -41,8 +42,15 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     dispatch({ type: LOGOUT, payload: { id } });
   };
 
+  const isLoggedIn = () => {
+    const user = state.users.find((u) => u.isLoggedIn === true);
+    return user ? true : false;
+  };
+
   return (
-    <Provider value={{ createUser, state, dispatch, login, logout }}>
+    <Provider
+      value={{ createUser, state, dispatch, login, logout, isLoggedIn }}
+    >
       {children}
     </Provider>
   );

@@ -17,8 +17,8 @@ import { useAuthContext } from "../contexts/AuthContext";
 import LoginModal from "./Modals/Login";
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard" },
-  { name: "Tracking", href: "/tracking" },
+  { name: "Dashboard", href: "/dashboard", private: true },
+  { name: "Tracking", href: "/tracking", private: true },
 ];
 
 function classNames(...classes: string[]) {
@@ -30,7 +30,7 @@ export default function Navbar() {
   const [openLogin, setOpenLogin] = useState(false);
   const pathname = window.location.pathname.slice(1);
   const navigate = useNavigate();
-  const { state, logout } = useAuthContext();
+  const { state, logout, isLoggedIn } = useAuthContext();
 
   const userLogged = state.users.filter((user) => user.isLoggedIn === true);
 
@@ -53,7 +53,7 @@ export default function Navbar() {
     <>
       <Disclosure
         as="nav"
-        className="bg-transparent border-b border-gray-200 p-2 fixed top-0 left-0 right-0 bg-transparencies-100 "
+        className="bg-transparent border-b border-gray-200  fixed top-0 left-0 right-0 bg-transparencies-100 "
       >
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
@@ -96,13 +96,14 @@ export default function Navbar() {
                         item.name.toLocaleLowerCase() === pathname
                           ? "bg-third text-white hover:text-gray-100 rounded-md "
                           : "text-gray-600 hover:underline hover:underline-offset- hover:decoration-primary hover:underline-offset-8 hover:text-gray-700",
+                        !isLoggedIn() && item.private ? "hidden" : "",
                         "px-3 py-2 text-base font-semibold hover:cursor-pointer"
                       )}
                     >
                       {item.name}
                     </a>
                   ))}
-                  {userLogged.length === 0 && (
+                  {!isLoggedIn() && (
                     <a
                       className="text-gray-600 hover:underline hover:underline-offset- hover:decoration-primary hover:underline-offset-8 hover:text-gray-700 px-3 py-2 text-base font-semibold hover:cursor-pointer"
                       onClick={() => handleOpen()}
@@ -191,32 +192,32 @@ export default function Navbar() {
         <DisclosurePanel className="sm:hidden">
           <div className="space-y-1 px-2 pb-3 pt-2 bg-gray-200">
             {navigation.map((item) => (
-              <>
-                <a
-                  key={item.name}
-                  href={item.href ? item.href : "undefined"}
-                  aria-current={
-                    item.name.toLocaleLowerCase() === pathname
-                      ? "page"
-                      : undefined
-                  }
-                  className={classNames(
-                    item.name.toLocaleLowerCase() === pathname
-                      ? "bg-primary text-white"
-                      : "text-third hover:bg-gray-300 hover:text-white",
-                    "block rounded-md px-3 py-2 text-base font-medium cursor-pointer"
-                  )}
-                >
-                  {item.name}
-                </a>
-                <a
-                  className="text-third hover:bg-gray-300 cursor-pointer hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                  onClick={() => handleOpen()}
-                >
-                  Create account
-                </a>
-              </>
+              <a
+                key={item.name}
+                href={item.href ? item.href : "undefined"}
+                aria-current={
+                  item.name.toLocaleLowerCase() === pathname
+                    ? "page"
+                    : undefined
+                }
+                className={classNames(
+                  item.name.toLocaleLowerCase() === pathname
+                    ? "bg-primary text-white"
+                    : "text-third hover:bg-gray-300 hover:text-white",
+                  !isLoggedIn() && item.private ? "hidden" : "",
+                  "block rounded-md px-3 py-2 text-base font-medium cursor-pointer"
+                )}
+              >
+                {item.name}
+              </a>
             ))}
+            <a
+              className={`${isLoggedIn() ? "hidden" : ""}
+                    "text-third hover:bg-gray-300 cursor-pointer hover:text-white block rounded-md px-3 py-2 text-base font-medium"`}
+              onClick={() => handleOpen()}
+            >
+              Create account
+            </a>
           </div>
         </DisclosurePanel>
       </Disclosure>

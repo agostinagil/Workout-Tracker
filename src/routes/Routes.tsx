@@ -6,6 +6,7 @@ import Workout from "../pages/UserViews/WorkoutView/Workout";
 import TrackingView from "../pages/UserViews/TrackingView/TrackingView";
 import SingleTracking from "../pages/UserViews/TrackingView/SingleTracking";
 import { AuthProvider } from "../contexts/AuthContext";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes = () => {
   return (
@@ -14,10 +15,38 @@ const AppRoutes = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/workout/:id" element={<Workout />} />
-          <Route path="/tracking" element={<TrackingView />} />
-          <Route path="/tracking/:id" element={<SingleTracking />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/workout/:id"
+            element={
+              <PrivateRoute>
+                <Workout />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/tracking"
+            element={
+              <PrivateRoute>
+                <TrackingView />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/tracking/:id"
+            element={
+              <PrivateRoute>
+                <SingleTracking />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

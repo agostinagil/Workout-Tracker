@@ -1,10 +1,9 @@
 import ShortUniqueId from "short-unique-id";
-import { CREATE_USER, DELETE_USER, LOGIN, LOGOUT } from "../actions/auth";
+import { CREATE_USER, LOGIN, LOGOUT } from "../actions/auth";
 import {
   AuthActions,
   AuthState,
   CreateUserAction,
-  DeleteUserAction,
   LoginAction,
   LogoutAction,
 } from "../types/auth";
@@ -16,8 +15,8 @@ export const initialState: AuthState = {
 const isCreateAction = (action: AuthActions): action is CreateUserAction =>
   action.type === CREATE_USER;
 
-const isDeleteAction = (action: AuthActions): action is DeleteUserAction =>
-  action.type === DELETE_USER;
+// const isDeleteAction = (action: AuthActions): action is DeleteUserAction =>
+//   action.type === DELETE_USER;
 
 const isLoginAction = (action: AuthActions): action is LoginAction =>
   action.type === LOGIN;
