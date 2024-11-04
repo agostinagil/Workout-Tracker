@@ -24,7 +24,7 @@ const RegisterForm = () => {
     setSuccessful(true);
   };
   return (
-    <div className={` ${successful ? "w-full py-20" : "w-2/3 h-full"} `}>
+    <div className={` ${successful ? "w-full py-20" : "w-full px-4  h-full"}`}>
       {successful ? (
         <h3 className="font-bold text-primary mx-auto text-4xl px-16 py-16 ">
           Registration successful!

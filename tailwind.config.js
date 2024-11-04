@@ -16,6 +16,10 @@ module.exports = {
         5: "1px",
         6: "0.88px",
       },
+      spacing: {
+        75: "12.5%",
+        416: "4.1666665%",
+      },
     },
     colors: {
       primary: "#cf6b6b",
