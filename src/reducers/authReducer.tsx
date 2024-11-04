@@ -55,6 +55,19 @@ export const authReducer = (
       }
       return state;
     }
+    case LOGOUT: {
+      if (isLogoutAction(action)) {
+        const user = state.users.map((u) =>
+          u.id === action.payload.id ? { ...u, isLoggedIn: false } : u
+        );
+        localStorage.setItem("users", JSON.stringify(user));
+        return {
+          ...state,
+          users: user,
+        };
+      }
+      return state;
+    }
     default:
       return state;
   }

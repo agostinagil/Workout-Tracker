@@ -30,12 +30,20 @@ export default function Navbar() {
   const [openLogin, setOpenLogin] = useState(false);
   const pathname = window.location.pathname.slice(1);
   const navigate = useNavigate();
-  const { state } = useAuthContext();
+  const { state, logout } = useAuthContext();
 
   const userLogged = state.users.filter((user) => user.isLoggedIn === true);
 
   const handleOpen = () => setOpenModal(true);
   const handleOpenLogin = () => setOpenLogin(true);
+
+  const handleSignOut = () => {
+    const user = state.users.find((user) => user.isLoggedIn === true);
+    if (user) {
+      logout(user.id);
+      navigate("/");
+    }
+  };
 
   const handleLogo = () => {
     navigate("/");
@@ -94,7 +102,7 @@ export default function Navbar() {
                       {item.name}
                     </a>
                   ))}
-                  {userLogged.length > 0 && (
+                  {userLogged.length === 0 && (
                     <a
                       className="text-gray-600 hover:underline hover:underline-offset- hover:decoration-primary hover:underline-offset-8 hover:text-gray-700 px-3 py-2 text-base font-semibold hover:cursor-pointer"
                       onClick={() => handleOpen()}
@@ -136,7 +144,7 @@ export default function Navbar() {
                       <MenuItem>
                         <a
                           href="/dashboard"
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 cursor-pointer"
                         >
                           Your Profile
                         </a>
@@ -144,7 +152,7 @@ export default function Navbar() {
                       <MenuItem>
                         <a
                           href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 cursor-pointer"
                         >
                           Settings
                         </a>
@@ -152,7 +160,8 @@ export default function Navbar() {
                       <MenuItem>
                         <a
                           href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 cursor-pointer"
+                          onClick={() => handleSignOut()}
                         >
                           Sign out
                         </a>
@@ -165,7 +174,7 @@ export default function Navbar() {
                     >
                       <MenuItem>
                         <a
-                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 cursor-pointer"
                           onClick={() => handleOpenLogin()}
                         >
                           Sign in

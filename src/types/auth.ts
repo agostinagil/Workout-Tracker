@@ -29,6 +29,7 @@ export interface LoginAction {
 
 export interface LogoutAction {
   type: typeof LOGOUT;
+  payload: { id: string };
 }
 
 export type AuthActions =

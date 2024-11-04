@@ -26,7 +26,7 @@ const RegisterForm = () => {
   return (
     <div className={` ${successful ? "w-full py-20" : "w-full px-4  h-full"}`}>
       {successful ? (
-        <h3 className="font-bold text-primary mx-auto text-4xl px-16 py-16 ">
+        <h3 className="font-bold text-primary mx-auto text-center text-4xl px-16 py-16 ">
           Registration successful!
         </h3>
       ) : (
