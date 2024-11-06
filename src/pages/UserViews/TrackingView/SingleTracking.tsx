@@ -1,20 +1,27 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Delete from "../../../Icons/Delete";
 import { Tracking } from "../../../types/workout";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 import { useEffect } from "react";
+import useUserWorkouts from "../../../hooks/useUserWorkouts";
 
 const SingleTracking = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { state, setCurrentWorkout } = useWorkoutsContext();
   const workout = state.nextWorkouts.find((w) => w.id === id);
   const tracking = workout?.tracking || [];
 
+  const userWorkout = useUserWorkouts();
+  console.log(userWorkout);
+
   useEffect(() => {
-    if (workout) {
+    if (userWorkout.length === 0) {
+      navigate("/error", { replace: true });
+    } else if (workout) {
       setCurrentWorkout(workout);
     }
-  }, [workout, setCurrentWorkout]);
+  }, [workout, setCurrentWorkout, userWorkout, navigate]);
 
   return (
     <div className="min-h-screen bg-gradient pt-28">

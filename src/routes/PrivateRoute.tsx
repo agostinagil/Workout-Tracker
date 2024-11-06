@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }: RouteProps) => {
 
   useEffect(() => {
     if (!isLoggedIn()) {
-      navigate("/");
+      navigate("/error");
     }
   }, [isLoggedIn, navigate]);
 

@@ -1,11 +1,8 @@
 import PlanCard from "../../../components/Cards/PlanCard";
-import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
+import useUserWorkouts from "../../../hooks/useUserWorkouts";
 
 const TrackingView = () => {
-  const { state } = useWorkoutsContext();
-  const workouts = state.nextWorkouts.filter(
-    (workout) => workout.tracking.length > 0
-  );
+  const workouts = useUserWorkouts().filter((w) => w.tracking.length > 0);
 
   const hasFewCards = workouts.length === 2;
   const isOneCard = workouts.length === 1;
