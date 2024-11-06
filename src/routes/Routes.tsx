@@ -7,6 +7,7 @@ import TrackingView from "../pages/UserViews/TrackingView/TrackingView";
 import SingleTracking from "../pages/UserViews/TrackingView/SingleTracking";
 import { AuthProvider } from "../contexts/AuthContext";
 import PrivateRoute from "./PrivateRoute";
+import ErrorView from "../pages/ErrorView";
 
 const AppRoutes = () => {
   return (
@@ -47,6 +48,7 @@ const AppRoutes = () => {
               </PrivateRoute>
             }
           />
+          <Route path="/error" element={<ErrorView />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -1,11 +1,17 @@
 import CreateWorkoutBtn from "../../../components/Buttons/CreateWorkoutBtn";
 import PlanCard from "../../../components/Cards/PlanCard";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
 import DashNoPlan from "./DashNoPlan";
 
 const Dashboard = () => {
   const { state } = useWorkoutsContext();
-  const workouts = state.nextWorkouts;
+  const { state: authState } = useAuthContext();
+
+  const loggedUser = authState.users.find((u) => u.isLoggedIn === true);
+  const loggedUserId = loggedUser?.id;
+
+  const workouts = state.nextWorkouts.filter((w) => w.userId === loggedUserId);
   const hasFewCards = workouts.length < 3;
   const isOneCard = workouts.length === 1;
 
