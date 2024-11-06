@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import Visible from "../../Icons/Visible";
 import NoVisible from "../../Icons/NoVisible";
+import Input from "../Inputs/Input";
 
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
@@ -9,20 +10,38 @@ const RegisterForm = () => {
   const [email, setEmail] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { createUser } = useAuthContext();
+  const [usernameError, setUsernameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passError, setPassError] = useState("");
+  //const [error, setError] = useState("");
+  const { createUser, state } = useAuthContext();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const newUser = {
-      username: username,
-      email: email,
-      password: password,
-      id: "",
-      isLoggedIn: false,
-    };
-    createUser(newUser);
-    setSuccessful(true);
+
+    const userExists = state.users.find((u) => u.username === username);
+
+    if (userExists) {
+      setUsernameError("This username isn't available");
+      return;
+    } else {
+      const newUser = {
+        username: username,
+        email: email,
+        password: password,
+        id: "",
+        isLoggedIn: false,
+      };
+      createUser(newUser);
+      setSuccessful(true);
+      setUsername("");
+    }
   };
+
+  const clearUsernameError = () => setUsernameError("");
+  const clearEmailError = () => setEmailError("");
+  const clearPassError = () => setPassError("");
+
   return (
     <div className={` ${successful ? "w-full py-20" : "w-full px-4  h-full"}`}>
       {successful ? (
@@ -35,30 +54,43 @@ const RegisterForm = () => {
             Create account
           </h6>
           <form onSubmit={handleSubmit} className="flex flex-col">
-            <input
+            <Input
               type="text"
-              name="username"
+              placeholder="Username"
               id="username"
-              placeholder="username"
-              className="input-form mx-auto my-2 px-4 py-2"
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              classes="input-form mx-auto my-2 px-4 py-2"
+              value={username}
+              onChange={setUsername}
+              setError={setUsernameError}
+              clearError={clearUsernameError}
             />
-            <input
+            {usernameError && (
+              <p className="text-xs text-primary">{usernameError}</p>
+            )}
+            <Input
               type="text"
-              name="email"
+              placeholder="Email"
               id="email"
-              placeholder="email"
-              className="input-form  mx-auto my-2 px-4 py-2"
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              classes="input-form  mx-auto my-2 px-4 py-2"
+              value={email}
+              onChange={setEmail}
+              setError={setEmailError}
+              clearError={clearEmailError}
             />
+            {emailError && <p className="text-xs text-primary">{emailError}</p>}
             <div className="relative mx-auto my-2 w-full">
-              <input
+              <Input
                 type={showPassword ? "text" : "password"}
-                name="password"
+                placeholder="Password"
                 id="password"
-                placeholder="password"
-                className="input-form w-full px-4 py-2 pr-10 "
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                classes="input-form w-full px-4 py-2 pr-10 "
+                value={password}
+                onChange={setPassword}
+                setError={setPassError}
+                clearError={clearPassError}
               />
               <button
                 type="button"
@@ -68,6 +100,7 @@ const RegisterForm = () => {
                 {showPassword ? <Visible /> : <NoVisible />}
               </button>
             </div>
+            {passError && <p className="text-xs text-primary">{passError}</p>}
             <button
               type="submit"
               className="min-w-full sm:w-2/4 mx-auto mt-6 mb-8 text-gray-800 font-bold bg-btnBorder hover:bg-second hover:border-btnBorder"
