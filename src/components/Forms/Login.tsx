@@ -2,6 +2,8 @@ import { FormEvent, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Input from "../Inputs/Input";
+import Visible from "../../Icons/Visible";
+import NoVisible from "../../Icons/NoVisible";
 
 interface LoginProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -13,7 +15,7 @@ const Login = ({ setIsOpen }: LoginProps) => {
   const [password, setPassword] = useState("");
   const [userError, setUserError] = useState("");
   const [passError, setPassError] = useState("");
-  // const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e: FormEvent) => {
@@ -71,17 +73,26 @@ const Login = ({ setIsOpen }: LoginProps) => {
         />
         {userError && <p className="text-xs text-primary">{userError}</p>}
 
-        <Input
-          type="text"
-          placeholder="Password"
-          id="password"
-          name="password"
-          classes="input-form mx-auto my-2 px-4 py-2"
-          value={password}
-          onChange={setPassword}
-          setError={setPassError}
-          clearError={clearPassError}
-        />
+        <div className="relative mx-auto my-2 w-full">
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            id="password"
+            name="password"
+            classes="input-form mx-auto px-4 py-2"
+            value={password}
+            onChange={setPassword}
+            setError={setPassError}
+            clearError={clearPassError}
+          />
+          <button
+            type="button"
+            className="absolute inset-y-0 right-0 bg-transparencies-100 flex items-center pr-4 hover:text-third"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <Visible /> : <NoVisible />}
+          </button>
+        </div>
         {passError && <p className="text-xs text-primary">{passError}</p>}
 
         <button
