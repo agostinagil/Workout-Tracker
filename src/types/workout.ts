@@ -1,6 +1,7 @@
 export interface Workout {
   id: string;
   name: string;
+  userId: string;
   exercises: Exercise[];
   tracking: Tracking[];
 }

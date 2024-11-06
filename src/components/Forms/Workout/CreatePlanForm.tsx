@@ -2,6 +2,7 @@ import ShortUniqueId from "short-unique-id";
 import "./createPlan.css";
 import { Workout } from "../../../types/workout";
 import { useWorkoutsContext } from "../../../contexts/WorkoutsContext";
+import { useAuthContext } from "../../../contexts/AuthContext";
 
 export interface ModalProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -9,22 +10,26 @@ export interface ModalProps {
 
 const CreatePlanForm = ({ setIsOpen }: ModalProps) => {
   const { createWorkout } = useWorkoutsContext();
+  const { state } = useAuthContext();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const uid = new ShortUniqueId({ length: 10 });
     const formData = new FormData(e.currentTarget);
     const workout = formData.get("workout") as string;
+    const user = state.users.find((u) => u.isLoggedIn === true);
 
-    const newWorkout: Workout = {
-      id: uid.rnd(),
-      name: workout,
-      exercises: [],
-      tracking: [],
-    };
-
-    createWorkout(newWorkout);
-    setIsOpen(false);
+    if (user) {
+      const newWorkout: Workout = {
+        id: uid.rnd(),
+        name: workout,
+        userId: user.id,
+        exercises: [],
+        tracking: [],
+      };
+      createWorkout(newWorkout);
+      setIsOpen(false);
+    }
   };
 
   return (

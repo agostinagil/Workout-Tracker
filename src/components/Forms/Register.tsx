@@ -13,7 +13,6 @@ const RegisterForm = () => {
   const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passError, setPassError] = useState("");
-  //const [error, setError] = useState("");
   const { createUser, state } = useAuthContext();
 
   const handleSubmit = (e: FormEvent) => {
