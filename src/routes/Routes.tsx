@@ -8,6 +8,7 @@ import SingleTracking from "../pages/UserViews/TrackingView/SingleTracking";
 import { AuthProvider } from "../contexts/AuthContext";
 import PrivateRoute from "./PrivateRoute";
 import ErrorView from "../pages/ErrorView";
+import Profile from "../pages/UserViews/Profile/Profile";
 
 const AppRoutes = () => {
   return (
@@ -45,6 +46,14 @@ const AppRoutes = () => {
             element={
               <PrivateRoute>
                 <SingleTracking />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
               </PrivateRoute>
             }
           />
